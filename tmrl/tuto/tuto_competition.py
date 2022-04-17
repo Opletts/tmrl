@@ -21,9 +21,6 @@ from tmrl.util import partial  # utility to partially instantiate objects
 from tmrl.networking import Trainer  # main Trainer object
 from tmrl.training_offline import TrainingOffline  # this is what we will customize
 
-from tmrl.custom.custom_models import SquashedGaussianMLPActor  # default policy architecture
-
-
 # =====================================================================
 # USEFUL PARAMETERS
 # =====================================================================
@@ -195,3 +192,5 @@ training_cls = partial(TrainingOffline,
                        memory_cls=memory_cls)
 
 my_trainer = Trainer(training_cls=training_cls)
+
+my_trainer.run()

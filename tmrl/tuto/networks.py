@@ -37,6 +37,7 @@ class MyActorModule(ActorModule):
         self.mu.weight.data.uniform_(-init_w, init_w)
 
     def forward(self, obs, test=False, with_logprob=True):
+        obs = torch.cat(obs, -1)
         prob = F.relu(self.fc1(obs))
         prob = F.relu(self.fc2(prob))
         actions = self.mu(prob)
@@ -73,6 +74,7 @@ class MyCriticModule(torch.nn.Module):
 
     def forward(self, X):
         state, action = X
+        state = torch.cat(state, -1)
         action_value = F.relu(self.fc1(torch.cat([state, action], 1)))
         action_value = F.relu(self.fc2(action_value))
         action_value = self.q(action_value)
