@@ -32,7 +32,8 @@ def url_retrieve(url: str, outfile: Path, overwrite: bool = False):
 
 
 # destination folder:
-TMRL_FOLDER = Path.home() / "TmrlData"
+HOME_FOLDER = Path.home()
+TMRL_FOLDER = HOME_FOLDER / "TmrlData"
 
 # download relevant items IF THE tmrl FOLDER DOESN'T EXIST:
 if not TMRL_FOLDER.exists():
@@ -63,6 +64,28 @@ if not TMRL_FOLDER.exists():
     copy2(RESOURCES_FOLDER / "config.json", CONFIG_FOLDER)
     copy2(RESOURCES_FOLDER / "reward.pkl", REWARD_FOLDER)
     copy2(RESOURCES_FOLDER / "SAC_4_LIDAR_pretrained.pth", WEIGHTS_FOLDER)
+
+    # on Windows, look for OpenPlanet:
+    if platform.system() == "Windows":
+        OPENPLANET_FOLDER = HOME_FOLDER / "OpenplanetNext"
+
+        if OPENPLANET_FOLDER.exists():
+            # copy the OpenPlanet script:
+            try:
+                OP_SCRIPTS_FOLDER = OPENPLANET_FOLDER / "Scripts"
+                OP_SCRIPTS_FOLDER.mkdir(parents=True, exist_ok=True)
+                TM20_SCRIPT_FILE = RESOURCES_FOLDER / 'Scripts' / 'Plugin_GrabData_0_1.as'
+                TM20_SCRIPT_FILE_SIG = RESOURCES_FOLDER / 'Scripts' / 'Plugin_GrabData_0_1.as.sig'
+                copy2(TM20_SCRIPT_FILE, OP_SCRIPTS_FOLDER)
+                copy2(TM20_SCRIPT_FILE_SIG, OP_SCRIPTS_FOLDER)
+            except Exception as e:
+                print(
+                    f"An exception was caught when trying to copy the OpenPlanet script and signature automatically. \
+                    Please copy these files manually for TrackMania 2020 support. The caught exception was: {str(e)}.")
+        else:
+            # warn the user that OpenPlanet couldn't be found:
+            print(f"The OpenPlanet folder was not found at {OPENPLANET_FOLDER}. \
+            Please copy the OpenPlanet script and signature manually for TrackMania 2020 support.")
 
 
 install_req = [
@@ -101,13 +124,13 @@ with open(os.path.join(HERE, "README.md")) as fid:
 
 setup(
     name='tmrl',
-    version='0.1.2',
+    version='0.1.3',
     description='Autonomous racing in Trackmania',
     long_description=README,
     long_description_content_type='text/markdown',
     keywords='reinforcement learning, trackmania, self driving, roborace',
     url='https://github.com/trackmania-rl/tmrl',
-    download_url='https://github.com/trackmania-rl/tmrl/archive/refs/tags/v0.1.2.tar.gz',
+    download_url='https://github.com/trackmania-rl/tmrl/archive/refs/tags/v0.1.3.tar.gz',
     author='Yann Bouteiller, Edouard Geze',
     author_email='yann.bouteiller@polymtl.ca, edouard.geze@hotmail.fr',
     license='MIT',
