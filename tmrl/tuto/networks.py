@@ -84,8 +84,6 @@ class MyActorCriticModule(torch.nn.Module):
         
         # our ActorModule:
         self.actor = MyActorModule(observation_space, action_space)
-        self.target_actor = MyActorModule(observation_space, action_space)
         
         # Critic networks:
         self.q = MyCriticModule(observation_space, action_space)
-        self.target_q = MyCriticModule(observation_space, action_space)
