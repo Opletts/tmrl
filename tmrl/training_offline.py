@@ -72,9 +72,10 @@ class TrainingOffline:
         if self.agent_scheduler is not None:
             self.agent_scheduler(self.agent, self.epoch)
 
+        print(rounds)
         for rnd in range(self.rounds):
             logging.info(f"=== epoch {self.epoch}/{self.epochs} ".ljust(20, '=') + f" round {rnd}/{self.rounds} ".ljust(50, '='))
-            logging.debug(f" SAC (Training): current memory size:{len(self.memory)}")
+            logging.debug(f" DDPG (Training): current memory size:{len(self.memory)}")
 
             stats_training = []
 

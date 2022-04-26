@@ -130,7 +130,7 @@ memory_cls = partial(memory_base_cls,
 # we implement our own neural network architecture (ActorModule),
 # and then we implement our own RL algorithm to train this module.
 
-from networks import MyActorModule
+# from networks import MyActorModule
 from tmrl.actor import ActorModule
 import torch
 
@@ -178,7 +178,8 @@ LOG_STD_MIN = -20
 # you will first need to implement your own ActorModule,
 # then, you will need to wrap this in a custom RolloutWorker.
 # from train_ddpg import DDPGAgent
-from spinup_ddpg import SpinupDDPGAgent
+# from spinup_ddpg import SpinupDDPGAgent
+from test_ddpg import SpinupDDPGAgent
 
 # training_agent_cls = partial(DDPGAgent)
 training_agent_cls = partial(SpinupDDPGAgent)
